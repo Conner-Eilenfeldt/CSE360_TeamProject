@@ -14,6 +14,20 @@ public class TextALot
 
 	String input;
 
+	void justify(String input, int lineLength, int justification)
+	{
+		int spaces = 0;
+
+		if (justification == 1)
+			spaces = (lineLength - input.length()) / 2;
+		else if (justification == 2)
+			spaces = lineLength - input.length();
+
+		for (int i = 0; i < spaces; i++)
+			System.out.print(" ");
+
+		System.out.print(input);
+	}
 
 	int main ()
 	{
@@ -36,23 +50,23 @@ public class TextALot
 					System.out.print("error");
 				}
 				break;
-			
+
 			case 'l':
 				justification = 0;
 				break;
-				
+
 			case 'c':
 				justification = 1;
 				break;
-				
+
 			case 'r':
 				justification = 2;
 				break;
-				
+
 			case 'e':
 				equalSpacing = !equalSpacing;
 				break;
-				
+
 			case 'w':
 				// wrapping method
 				if(input.equals("-w+"))
@@ -61,8 +75,8 @@ public class TextALot
 					wrapping = false;
 				else
 					//command error
-				break;
-				
+					break;
+
 			case 'p':
 				try
 				{
@@ -73,7 +87,7 @@ public class TextALot
 				{
 					System.out.print("error");
 				}
-				
+
 				break;
 			case 'b':
 				try
@@ -85,13 +99,13 @@ public class TextALot
 				{
 					System.out.print("error");
 				}
-				
+
 				break;
-				
+
 			case 't':
 				// title method
 				break;
-				
+
 			case 'a':
 				// column method
 				break;
