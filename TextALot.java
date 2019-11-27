@@ -3,7 +3,7 @@ package teamProject;
 public class TextALot
 {
 	int MAX_LINE_LENGTH = 150;
-
+	ghufdhgfhhdjfhdjhfjdfhdjfhjd
 	int lineLength = 80;
 	int justification = 0; // 0 = left, 1 = center, 2 = right
 	int paragraph = 0; // number of spaces for new paragraph
