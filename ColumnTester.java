@@ -3,7 +3,7 @@ import java.io.*;
 
 public class ColumnTester 
 {
-	final int MAX_LINE_LENGTH = 150;
+	final int MAX_LINE_LENGTH = 95;
 	final int MAX_COLUMN_LENGTH = 35;
 	final String COMMAND_ERROR_MESSAGE = "Error invalid command or entered command incorrectly";
 	final String INVALID_NUMERICAL_MESSAGE = "Error invalid numerical value";
@@ -18,7 +18,6 @@ public class ColumnTester
 	ColumnLinkedList columnList;
 	WrapQueue wrapQueue = new WrapQueue();
 	DisplayGui dispGui;
-	
 	public ColumnTester()
 	{
 		dispGui = null;
@@ -48,14 +47,14 @@ public class ColumnTester
 		try 
 		{
 			File file = new File(fileName);
-			
-		    reader = new BufferedReader(new FileReader(file));
-		    String text = null;
-		    text = reader.readLine();
-		    
-		    while (text != null) 
-		    {
-		    	if (text.length() > 0 && text.charAt(0) == '-')
+
+			reader = new BufferedReader(new FileReader(file));
+			String text = null;
+			text = reader.readLine();
+
+			while (text != null) 
+			{
+				if (text.length() > 0 && text.charAt(0) == '-')
 				{
 					switch(text.charAt(1))
 					{
@@ -63,32 +62,45 @@ public class ColumnTester
 						try
 						{
 							int number = Integer.parseInt(text.substring(2));
-							lineLength = number;
+							if(number < MAX_LINE_LENGTH)
+								lineLength = number;
+							else
+							{
+								String errorMessage = "Error new line length exceeds max line length";
+								dispGui.updateErrorDisplay(errorMessage + "\n");
+							}
 						}
-						catch(NumberFormatException exception)  // change e
+						catch(NumberFormatException exception)
 						{
 							System.out.println(INVALID_NUMERICAL_MESSAGE);
 							dispGui.updateErrorDisplay(INVALID_NUMERICAL_MESSAGE + "\n");
 						}
 						break;
-					
 					case 'l':
-						justification = 0;
+						if(text.equals("-l"))
+							justification = 0;
+						else
+							dispGui.updateErrorDisplay(COMMAND_ERROR_MESSAGE + "\n");
 						break;
-						
 					case 'c':
-						justification = 1;
+						if(text.equals("-c"))
+							justification = 1;
+						else
+							dispGui.updateErrorDisplay(COMMAND_ERROR_MESSAGE + "\n");
 						break;
-						
 					case 'r':
-						justification = 2;
+						if(text.equals("-r"))
+							justification = 2;
+						else
+							dispGui.updateErrorDisplay(COMMAND_ERROR_MESSAGE + "\n");
 						break;
-						
 					case 'e':
-						equalSpacing = !equalSpacing;
+						if(text.equals("-e"))
+							equalSpacing = !equalSpacing;
+						else
+							dispGui.updateErrorDisplay(COMMAND_ERROR_MESSAGE + "\n");
 						break;
 					case 'w':
-						// wrapping method
 						if(text.equals("-w+"))
 							wrapping = true;
 						else if(text.equals("-w-"))
@@ -118,12 +130,11 @@ public class ColumnTester
 							else
 								paragraph = number;
 						}
-						catch(NumberFormatException exception)  // change e
+						catch(NumberFormatException exception)
 						{
 							System.out.println(INVALID_NUMERICAL_MESSAGE);
 							dispGui.updateErrorDisplay(INVALID_NUMERICAL_MESSAGE + "\n");
 						}
-						
 						break;
 					case 'b':
 						try
@@ -131,6 +142,7 @@ public class ColumnTester
 							int number = Integer.parseInt(text.substring(2));
 							for(int i = 0; i < number; i++)
 							{
+								/* Do we even need to check for wrapping?
 								if(wrapping)
 								{
 									if(column)
@@ -139,28 +151,25 @@ public class ColumnTester
 										formatWrapInput("");
 								}
 								else
-								{
-									if(column)
-										formatColumnInput("");
-									else
-										dispGui.updateTextDisplay("\n");
-								}
-								
+								{	*/
+								if(column)
+									formatColumnInput("");
+								else
+									dispGui.updateTextDisplay("\n");
+								//	 }
 							}
 						}
-						catch(NumberFormatException exception)  // change e
+						catch(NumberFormatException exception)
 						{
 							System.out.println(INVALID_NUMERICAL_MESSAGE);
 							dispGui.updateErrorDisplay(INVALID_NUMERICAL_MESSAGE + "\n");
 						}
-						
 						break;
-					//Error potentially with title and wrapping
+						//Error potentially with title and wrapping
 					case 't':
 						text = reader.readLine();
 						if(text != null)
 						{
-							justification = 1; //Change to center allignment
 							if(column)
 							{
 								if(text.length() > MAX_COLUMN_LENGTH)
@@ -169,7 +178,6 @@ public class ColumnTester
 											+ "length of " + MAX_COLUMN_LENGTH;
 									System.out.println(errorExceeds);
 									dispGui.updateErrorDisplay(errorExceeds + "\n");
-									
 								}
 								else
 								{
@@ -184,9 +192,8 @@ public class ColumnTester
 							{
 								if(text.length() > lineLength)
 								{
-									String errorExceeds = "Error title exceeds maximum "
-											+ "length of " + lineLength;
-									System.out.println(errorExceeds);
+									String errorExceeds = "Error title exceeds maximum length of " + lineLength;
+									//				System.out.println(errorExceeds);
 									dispGui.updateErrorDisplay(errorExceeds + "\n");
 								}
 								else
@@ -196,23 +203,27 @@ public class ColumnTester
 										titleBars += "-";
 									text = formatInput(text);
 									titleBars = formatInput(titleBars);
-									
-									if(column)
-									{
-										columnList.addTextLine(text);
-										columnList.addTextLine(titleBars);
-									}
-									else
-										dispGui.updateTextDisplay(text + "\n" + titleBars + "\n");
+
+									/* Does an error occur?
+									 * When printing, there is always a new line at the end of the underline line.
+									 * It should be separate from regular formatter.
+									 */
+									dispGui.updateTextDisplay(text + "\n" + titleBars + "\n");
 								}
 							}
 						}
 						break;
 					case 's':
-						spacing = false;
+						if(text.equals("-s"))
+							spacing = false;
+						else
+							dispGui.updateErrorDisplay(COMMAND_ERROR_MESSAGE + "\n");
 						break;
 					case 'd':
-						spacing = true;
+						if(text.equals("-d"))
+							spacing = true;
+						else
+							dispGui.updateErrorDisplay(COMMAND_ERROR_MESSAGE + "\n");
 						break;
 					case 'a':
 						try
@@ -245,7 +256,7 @@ public class ColumnTester
 								dispGui.updateErrorDisplay(COMMAND_ERROR_MESSAGE + "\n");
 							}
 						}
-						catch(NumberFormatException e)  // change e
+						catch(NumberFormatException exception)
 						{
 							System.out.println(INVALID_NUMERICAL_MESSAGE);
 							dispGui.updateErrorDisplay(INVALID_NUMERICAL_MESSAGE + "\n");
@@ -259,7 +270,7 @@ public class ColumnTester
 				else
 				{
 					String output = formatInput(text);
-					
+
 					if(wrapping)
 					{
 						if (column)
@@ -277,46 +288,45 @@ public class ColumnTester
 							System.out.println(output);
 						}
 					}
-					
 				}
-		    	text = reader.readLine();
-		    }
-		    if(wrapping)
-		    {
-		    	if(column)
-		    		addColumnWrap();
-		    	else
-		    		printWrap();
-		    }
-		    if(column)
-		    {
-		    	columnList.printColumns();
-		    	columnList.clear();
-		    }
+				text = reader.readLine();
+			}
+			if(wrapping)
+			{
+				if(column)
+					addColumnWrap();
+				else
+					printWrap();
+			}
+			if(column)
+			{
+				columnList.printColumns();
+				columnList.clear();
+			}
 		}
 		catch (FileNotFoundException e) 
 		{
-		    System.out.println("Error, File Not Found");
-		    dispGui.updateInputErrorDisp("Error, File Not Found");
+			System.out.println("Error, File Not Found");
+			dispGui.updateInputErrorDisp("Error, File Not Found");
 		}
 		catch (IOException e) 
 		{
-		    System.out.println("I/O Error");
-		    dispGui.updateInputErrorDisp("Input/Output Error. Please try again");
+			System.out.println("I/O Error");
+			dispGui.updateInputErrorDisp("Input/Output Error. Please try again");
 		}
 		finally 
 		{
-		    try 
-		    {
-		        if (reader != null) 
-		        {
-		            reader.close();
-		        }
-		    } 
-		    catch (IOException e) 
-		    {
-		    	
-		    }
+			try 
+			{
+				if (reader != null) 
+				{
+					reader.close();
+				}
+			} 
+			catch (IOException e) 
+			{
+
+			}
 		}
 		/**
 		colList.addTextLine("This is the start           ");
@@ -325,15 +335,15 @@ public class ColumnTester
 		colList.addTextLine("Top of Column 2             ");
 		colList.addTextLine("2nd row of column 2         ");
 		colList.addTextLine("3rd row of column 2         ");
-		
+
 		colList.printColumns();
-		*/
+		 */
 	}
 	private String leftAllign(String inputText, int lineLimit)
 	{
 		String allignedText = inputText;
 		int adjustmentSpace = lineLimit - inputText.length();
-		
+
 		for(int i = 0; i < adjustmentSpace; i++)
 		{
 			allignedText += " ";
@@ -344,7 +354,7 @@ public class ColumnTester
 	{
 		String allignedText = "";
 		int adjustmentSpace = lineLimit - inputText.length();
-		
+
 		for(int i = 0; i < adjustmentSpace; i++)
 		{
 			allignedText += " ";
@@ -356,16 +366,16 @@ public class ColumnTester
 	{
 		String spacing = "";
 		String allignedText = "";
-		
+
 		int adjustmentSpace = lineLimit - inputText.length();
-		
+
 		for(int i = 0; i < adjustmentSpace / 2; i++)
 		{
 			spacing += " ";
 		}
-		
+
 		allignedText = spacing + inputText;
-		
+
 		if(adjustmentSpace % 2 != 0)
 			allignedText += spacing + " ";
 		else
@@ -383,7 +393,7 @@ public class ColumnTester
 		int beginWordIndex = 0;
 		boolean atLeastOneWord = false; //If there is at least one word
 		boolean wordFound = false;
-		
+
 		for(int index = 0; index < inputStr.length(); index++)
 		{
 			if(inputStr.charAt(index) != ' ' && inputStr.charAt(index) != '\n')
@@ -392,7 +402,7 @@ public class ColumnTester
 				atLeastOneWord = true;
 				beginWordIndex = index;
 				index++;
-				
+
 				while(index < inputStr.length() && wordFound)
 				{
 					if(inputStr.charAt(index) == ' ' || inputStr.charAt(index) == '\n')
@@ -429,9 +439,9 @@ public class ColumnTester
 			int wordAmount = wordList.getNodeAmount();
 			int spaceLength = (lineLimit - spaceCount - totalWordCharacters) / (wordAmount - 1);
 			int remainingSpace = (lineLimit - spaceCount - totalWordCharacters) % (wordAmount - 1);
-			
+
 			String spaceAmount = "";
-			
+
 			for(int i = 0; i < spaceLength; i++)
 			{
 				spaceAmount += " ";
@@ -442,7 +452,7 @@ public class ColumnTester
 			{
 				String insertWord = wordList.removeFromHead();
 				//equallySpacedWords += insertWord + spaceAmount; OLD METHOD
-				
+
 				if(remainingSpace > 0)
 				{
 					equallySpacedWords += " ";
@@ -464,7 +474,7 @@ public class ColumnTester
 		boolean tempEqualSpace = equalSpacing;
 		boolean tempSpacing = spacing;
 		int tempLineLimit = lineLength;
-		
+
 		while(!wrapQueue.isEmpty())
 		{
 			WrapInformation wrapInfo = wrapQueue.removeFromHead();
@@ -472,11 +482,11 @@ public class ColumnTester
 			equalSpacing = wrapInfo.equalSpacing;
 			spacing = wrapInfo.spacing;
 			lineLength = wrapInfo.lineLength;
-			
+
 			formatColumnInput(wrapInfo.storedText);
 		}
 		wrapQueue.clear();
-		
+
 		//Restore defaults
 		justification = tempJustification;
 		equalSpacing = tempEqualSpace;
@@ -490,7 +500,7 @@ public class ColumnTester
 		boolean tempEqualSpace = equalSpacing;
 		boolean tempSpacing = spacing;
 		int tempLineLimit = lineLength;
-		
+
 		while(!wrapQueue.isEmpty())
 		{
 			WrapInformation wrapInfo = wrapQueue.removeFromHead();
@@ -498,12 +508,12 @@ public class ColumnTester
 			equalSpacing = wrapInfo.equalSpacing;
 			spacing = wrapInfo.spacing;
 			lineLength = wrapInfo.lineLength;
-			
+
 			System.out.println(formatInput(wrapInfo.storedText));
 			dispGui.updateTextDisplay(formatInput(wrapInfo.storedText) + "\n");
 		}
 		wrapQueue.clear();
-		
+
 		//Restore defaults
 		justification = tempJustification;
 		equalSpacing = tempEqualSpace;
@@ -513,7 +523,7 @@ public class ColumnTester
 	private void formatWrapColumnInput(String inputText)
 	{
 		int wrappingLimit = MAX_COLUMN_LENGTH;
-		
+
 		//Paragraph Exceeds 0
 		if(paragraph > 0)
 		{
@@ -527,14 +537,14 @@ public class ColumnTester
 		//to include error when entire word exceeds limit
 		//and cannot be broken up
 		boolean exceedsLimit = inputText.length() > MAX_COLUMN_LENGTH;
-		
+
 		if(wrapQueue.isEmpty())
 		{
 			if(exceedsLimit)
 			{
 				char succeedingCharacter = inputText.charAt(MAX_COLUMN_LENGTH);
 				int index = MAX_COLUMN_LENGTH;
-				
+
 				//A word needs to be cut off
 				if(succeedingCharacter != ' ')
 				{
@@ -578,7 +588,7 @@ public class ColumnTester
 		{
 			boolean wordFound = false;
 			boolean wordEnd = false;
-			
+
 			int index = 0;
 			int startWordIndex = 0;
 			int endWordIndex = 0;
@@ -605,7 +615,7 @@ public class ColumnTester
 				wordEnd = true;
 				endWordIndex = index - 1;
 			}
-			
+
 			if(wordEnd) //Word exists and can be wrapped
 			{
 				int wordLength = endWordIndex - startWordIndex + 1;
@@ -616,7 +626,7 @@ public class ColumnTester
 				{
 					int remainingSpace = wrappingLimit - wrapQueue.lastCharacterIndex() - 2;
 					int endWrapIndex = startWordIndex;
-					
+
 					while(endWrapIndex < inputText.length() && remainingSpace > 0)
 					{
 						endWrapIndex++;
@@ -627,7 +637,7 @@ public class ColumnTester
 						//insert substring from startWordIndex and also (0, lastCharacterIndex) of in queue
 						String wrappedText = inputText.substring(startWordIndex);
 						String queueWrap = wrapQueue.getQueueText().substring(0,lastCharacterIndex + 1);
-						
+
 						wrapQueue.updateQueue(queueWrap + " " + wrappedText);
 					}
 					else //Used up all space
@@ -639,7 +649,7 @@ public class ColumnTester
 								//Insert into queue directly
 								String wrappedText = inputText.substring(startWordIndex);
 								String queueWrap = wrapQueue.getQueueText().substring(0,lastCharacterIndex + 1);
-								
+
 								wrapQueue.updateQueue(queueWrap + " " + wrappedText);
 							}	
 							else
@@ -654,9 +664,9 @@ public class ColumnTester
 								//Insert remaining portion into queue
 								String wrappedText = inputText.substring(startWordIndex,wrapIndex + 1);
 								String queueWrap = wrapQueue.getQueueText().substring(0,lastCharacterIndex + 1);
-								
+
 								wrapQueue.updateQueue(queueWrap + " " + wrappedText);
-								
+
 								formatWrapInput(inputText.substring(wrapIndex + 1));
 							}		
 						}
@@ -664,7 +674,7 @@ public class ColumnTester
 						{
 							String wrappedText = inputText.substring(startWordIndex);
 							String queueWrap = wrapQueue.getQueueText().substring(0,lastCharacterIndex + 1);
-							
+
 							wrapQueue.updateQueue(queueWrap + " " + wrappedText);
 						}
 					}
@@ -698,14 +708,14 @@ public class ColumnTester
 		//to include error when entire word exceeds limit
 		//and cannot be broken up
 		boolean exceedsLimit = inputText.length() > lineLength;
-		
+
 		if(wrapQueue.isEmpty())
 		{
 			if(exceedsLimit)
 			{
 				char succeedingCharacter = inputText.charAt(lineLength);
 				int index = lineLength;
-				
+
 				//A word needs to be cut off
 				if(succeedingCharacter != ' ')
 				{
@@ -749,7 +759,7 @@ public class ColumnTester
 		{
 			boolean wordFound = false;
 			boolean wordEnd = false;
-			
+
 			int index = 0;
 			int startWordIndex = 0;
 			int endWordIndex = 0;
@@ -776,7 +786,7 @@ public class ColumnTester
 				wordEnd = true;
 				endWordIndex = index - 1;
 			}
-			
+
 			if(wordEnd) //Word exists and can be wrapped
 			{
 				int wordLength = endWordIndex - startWordIndex + 1;
@@ -787,7 +797,7 @@ public class ColumnTester
 				{
 					int remainingSpace = wrappingLimit - wrapQueue.lastCharacterIndex() - 2;
 					int endWrapIndex = startWordIndex;
-					
+
 					while(endWrapIndex < inputText.length() && remainingSpace > 0)
 					{
 						endWrapIndex++;
@@ -798,7 +808,7 @@ public class ColumnTester
 						//insert substring from startWordIndex and also (0, lastCharacterIndex) of in queue
 						String wrappedText = inputText.substring(startWordIndex);
 						String queueWrap = wrapQueue.getQueueText().substring(0,lastCharacterIndex + 1);
-						
+
 						wrapQueue.updateQueue(queueWrap + " " + wrappedText);
 					}
 					else //Used up all space
@@ -810,7 +820,7 @@ public class ColumnTester
 								//Insert into queue directly
 								String wrappedText = inputText.substring(startWordIndex);
 								String queueWrap = wrapQueue.getQueueText().substring(0,lastCharacterIndex + 1);
-								
+
 								wrapQueue.updateQueue(queueWrap + " " + wrappedText);
 							}	
 							else
@@ -825,9 +835,9 @@ public class ColumnTester
 								//Insert remaining portion into queue
 								String wrappedText = inputText.substring(startWordIndex,wrapIndex + 1);
 								String queueWrap = wrapQueue.getQueueText().substring(0,lastCharacterIndex + 1);
-								
+
 								wrapQueue.updateQueue(queueWrap + " " + wrappedText);
-								
+
 								formatWrapInput(inputText.substring(wrapIndex + 1));
 							}		
 						}
@@ -835,7 +845,7 @@ public class ColumnTester
 						{
 							String wrappedText = inputText.substring(startWordIndex);
 							String queueWrap = wrapQueue.getQueueText().substring(0,lastCharacterIndex + 1);
-							
+
 							wrapQueue.updateQueue(queueWrap + " " + wrappedText);
 						}
 					}
@@ -870,7 +880,7 @@ public class ColumnTester
 		//to include error when entire word exceeds limit
 		//and cannot be broken up
 		boolean exceedsLimit = inputText.length() > MAX_COLUMN_LENGTH;
-		
+
 		if(exceedsLimit)
 		{
 			char succeedingCharacter = inputText.charAt(MAX_COLUMN_LENGTH);
@@ -899,19 +909,19 @@ public class ColumnTester
 		{
 			switch (justification)
 			{
-				case 0:
-					if(equalSpacing)
-						inputText = equallySpaced(inputText,MAX_COLUMN_LENGTH);
-					columnList.addTextLine(leftAllign(inputText,MAX_COLUMN_LENGTH));
-					break;
-				case 1:
-					columnList.addTextLine(center(inputText,MAX_COLUMN_LENGTH));
-					break;
-				case 2:
-					columnList.addTextLine(rightAllign(inputText,MAX_COLUMN_LENGTH));
-					break;
-				default:
-					System.out.println("Error");
+			case 0:
+				if(equalSpacing)
+					inputText = equallySpaced(inputText,MAX_COLUMN_LENGTH);
+				columnList.addTextLine(leftAllign(inputText,MAX_COLUMN_LENGTH));
+				break;
+			case 1:
+				columnList.addTextLine(center(inputText,MAX_COLUMN_LENGTH));
+				break;
+			case 2:
+				columnList.addTextLine(rightAllign(inputText,MAX_COLUMN_LENGTH));
+				break;
+			default:
+				System.out.println("Error");
 			}
 			if(spacing)
 			{
@@ -932,7 +942,7 @@ public class ColumnTester
 		}
 		String formattedOutput = "";
 		boolean exceedsLimit = inputText.length() > lineLength;
-		
+
 		if(exceedsLimit)
 		{
 			char succeedingCharacter = inputText.charAt(lineLength);
@@ -971,19 +981,19 @@ public class ColumnTester
 		{
 			switch (justification)
 			{
-				case 0:
-					if(equalSpacing)
-						inputText = equallySpaced(inputText,lineLength);
-					formattedOutput = leftAllign(inputText,lineLength);
-					break;
-				case 1:
-					formattedOutput = center(inputText,lineLength);
-					break;
-				case 2:
-					formattedOutput = rightAllign(inputText,lineLength);
-					break;
-				default:
-					System.out.println("Error");
+			case 0:
+				if(equalSpacing)
+					inputText = equallySpaced(inputText,lineLength);
+				formattedOutput = leftAllign(inputText,lineLength);
+				break;
+			case 1:
+				formattedOutput = center(inputText,lineLength);
+				break;
+			case 2:
+				formattedOutput = rightAllign(inputText,lineLength);
+				break;
+			default:
+				System.out.println("Error");
 			}
 			if(spacing)
 			{
@@ -993,4 +1003,79 @@ public class ColumnTester
 		return formattedOutput;
 	}
 
+
+	// Conner
+	public String justify(String input, int lineLength, int justification)
+	{
+		int numOfSpaces = 0;
+		String spaces = "";
+
+		if (justification == 1)
+			numOfSpaces = (lineLength - input.length()) / 2;
+		else if (justification == 0 || justification == 2)
+			numOfSpaces = lineLength - input.length();
+
+		for (int i = 0; i < numOfSpaces; i++)
+		{
+			spaces += " ";
+		}
+
+		System.out.print(input);
+
+		return spaces;
+	}
+
+
+
+
+
+
+	//Payden 
+	public void title(String line) {
+
+		int spaceNum = (n - line.length())/2;
+		String space = "";
+		String underline = "";
+		for(int i = 0; i < spaceNum; i++) {
+			space += " ";
+		}
+		for(int i = 0; i < n; i++) {
+			underline += "-";
+		}
+		System.out.println(space+ line + space);
+		System.out.println(underline);
+
+	}
+
+
+	public void paragraph(String command, String nextLine) {
+		int[] arr = new int[command.length()-2];
+		boolean valid = true;
+		int i = 0;
+		while(valid == true && i + 2 < command.length()) {
+			int num = (int)command.charAt(i+2);
+			if(num>47 && num<58) { // if it is in the range of integers of the ASCII values 
+				arr[i] = ((int)command.charAt(i+2)) - 48;
+				i++;
+			}
+			else
+				valid = false;
+		}
+		if(valid == false) {
+			System.out.println("Error: incorrect command format");
+		}
+		else {
+			String Space = "";
+			int space = 0;
+			for(int j = 0; j < arr.length; j++) {
+				space += ((Math.pow(10, j))*arr[(arr.length-1) - j]); 
+			}
+			for(i = 0; i < space; i++) {
+				Space += " ";
+			}
+			nextLine = Space + nextLine;
+			System.out.println(nextLine);
+		}
+
+	}
 }
