@@ -25,7 +25,8 @@ import java.util.ArrayList;
 
 public class DisplayGui extends VBox
 {
-   private final int TEXT_AREA_WIDTH = 600;
+   private final int DISPLAY_TEXT_AREA_WIDTH = 700;
+   private final int ERROR_TEXT_AREA_WIDTH = 400;
    private final int TEXT_AREA_HEIGHT = 600;
    private final int ADJUSTMENT_LABEL_SPACE = 20;
    
@@ -35,12 +36,6 @@ public class DisplayGui extends VBox
    private Label inputOutputError, displayTextLabel,errorLabel;
    private ColumnTester executor;
    
-   private ComboBox<String> colorCombo, widthCombo;
-   private ArrayList<Line> lineList;
-   private Pane canvas;
-   private Line currentLine; //stores value of current line being drawn
-   private Color lineColor;
-   private int lineWidth;
    
    public DisplayGui()
    {
@@ -57,12 +52,12 @@ public class DisplayGui extends VBox
       formattedTextDisplay = new TextArea("");
       formattedTextDisplay.setEditable(false);
       formattedTextDisplay.setStyle("-fx-font-family: monospace");
-      formattedTextDisplay.setPrefSize(TEXT_AREA_WIDTH, TEXT_AREA_HEIGHT);
+      formattedTextDisplay.setPrefSize(DISPLAY_TEXT_AREA_WIDTH, TEXT_AREA_HEIGHT);
       
       errorDisplay = new TextArea("");
       errorDisplay.setEditable(false);
       errorDisplay.setStyle("-fx-font-family: monospace");
-      errorDisplay.setPrefSize(TEXT_AREA_WIDTH, TEXT_AREA_HEIGHT);
+      errorDisplay.setPrefSize(ERROR_TEXT_AREA_WIDTH, TEXT_AREA_HEIGHT);
       
       openFileField = new TextField("");
       saveFileField = new TextField("");
@@ -73,9 +68,9 @@ public class DisplayGui extends VBox
       
       displayTextLabel = new Label("Display");
       errorLabel = new Label("Errors");
-      displayTextLabel.setPadding(new Insets(0,0,0,(TEXT_AREA_WIDTH - displayTextLabel.getText().length())
+      displayTextLabel.setPadding(new Insets(0,0,0,(DISPLAY_TEXT_AREA_WIDTH - displayTextLabel.getText().length())
     		  /2 - ADJUSTMENT_LABEL_SPACE));
-      errorLabel.setPadding(new Insets(0,0,0,(TEXT_AREA_WIDTH - displayTextLabel.getText().length())
+      errorLabel.setPadding(new Insets(0,0,0,(ERROR_TEXT_AREA_WIDTH - displayTextLabel.getText().length())
     		  /2 - ADJUSTMENT_LABEL_SPACE));
       
       HBox openPane = new HBox();
@@ -92,7 +87,8 @@ public class DisplayGui extends VBox
       inputPane.setSpacing(5);
       inputPane.setPadding(new Insets(10, 10, 10, 10));
       inputPane.getChildren().addAll(openPane,savePane,inputOutputError);
-      inputPane.setPadding(new Insets(0,0,0,TEXT_AREA_WIDTH - 150));
+      inputPane.setPadding(new Insets(0,0,0,(DISPLAY_TEXT_AREA_WIDTH + ERROR_TEXT_AREA_WIDTH) / 2
+    		  - 150));
       
       VBox displayTextPane = new VBox();
       displayTextPane.getChildren().addAll(displayTextLabel,formattedTextDisplay);
@@ -100,85 +96,13 @@ public class DisplayGui extends VBox
       VBox errorPane = new VBox();
       errorPane.getChildren().addAll(errorLabel,errorDisplay);
       
-      /**
-      BorderPane displayTextPane = new BorderPane();
-      displayTextPane.setCenter(displayTextLabel);
-      displayTextPane.setBottom(formattedTextDisplay);
-      
-      BorderPane errorPane = new BorderPane();
-      errorPane.setCenter(errorLabel);
-      errorPane.setBottom(errorDisplay);
-      */
       
       HBox displayPane = new HBox();
       displayPane.getChildren().addAll(displayTextPane,errorPane);
       
       this.getChildren().addAll(inputPane,displayPane);
       this.setPrefSize(1000, 600);
-      /**
-      lineColor = Color.BLACK; //default color
-      lineWidth = 1; //default line width
-
-      //Stores Strings of colors for the lines  
-      ArrayList<String> colors = new ArrayList<String>();
-       colors.add("Black");
-       colors.add("Blue");
-       colors.add("Red");
-       colors.add("Yellow");
-       colors.add("Green");
-       
-       ObservableList<String> obsColors = FXCollections.observableArrayList(colors);
-       colorCombo = new ComboBox<String>(obsColors); //instantiates combo box of color selections
-       colorCombo.getSelectionModel().selectFirst(); //default selects first (black)
-       
-       ArrayList<String> widthSize = new ArrayList<>();
-       
-       //Adds odd integers from 1 - 7 to widthSize
-       for(int i = 1; i <= 7; i += 2)
-       {
-    	   widthSize.add(i + "");
-       }
-       ObservableList<String> obsSize = FXCollections.observableArrayList(widthSize);
-       widthCombo = new ComboBox<String>(obsSize);
-       widthCombo.getSelectionModel().selectFirst(); //defaults to width 1
-       
-       //Used to track lines created
-       lineList = new ArrayList<Line>();
-       
-      //topPane should contain two combo boxes and two buttons
-      HBox topPane = new HBox();
-      topPane.setSpacing(40);
-      topPane.setPadding(new Insets(10, 10, 10, 10));
-      topPane.setStyle("-fx-border-color: black");
-      topPane.getChildren().addAll(colorCombo,widthCombo,openButton,saveButton);
-       
-       //canvas is a Pane where we will draw lines
-      canvas = new Pane();
-      canvas.setStyle("-fx-background-color: white;");
-
-       
-      //add the canvas at the center of the pane and top panel
-      //should have two combo boxes and two buttons
-      this.setCenter(canvas);
-      this.setTop(topPane);
-
-       
-      //Step #3: Register the source nodes with its handler objects
-
-      colorCombo.setOnAction(new ColorHandler());
-      widthCombo.setOnAction(new WidthHandler());
-      
-      ButtonHandler remover = new ButtonHandler();
-      
-      openButton.setOnAction(remover);
-      saveButton.setOnAction(remover);
-      
-      MouseHandler mouseHandle = new MouseHandler();
-      
-      canvas.setOnMousePressed(mouseHandle);
-      canvas.setOnMouseDragged(mouseHandle);
-      canvas.setOnMouseReleased(mouseHandle);
-      */
+     
       ButtonHandler fileHandler = new ButtonHandler();
       openButton.setOnAction(fileHandler);
       saveButton.setOnAction(fileHandler);
@@ -303,69 +227,13 @@ public class DisplayGui extends VBox
         }
     }//end ButtonHandler
 
-
-   /*
-   //Step #2(C)- A handler class used to handle colors
-   private class ColorHandler implements EventHandler<ActionEvent>
-   {
-       public void handle(ActionEvent event)
-       {
-    	   switch(colorCombo.getSelectionModel().getSelectedItem())
-    	   {
-    	   case "Black":
-    		   lineColor = Color.BLACK;
-    		   break;
-    	   case "Blue":
-    		   lineColor = Color.BLUE;
-    		   break;
-    	   case "Red":
-    		   lineColor = Color.RED;
-    		   break;
-    	   case "Yellow":
-    		   lineColor = Color.YELLOW;
-    		   break;
-    	   case "Green":
-    		   lineColor = Color.GREEN;
-    		   break;
-    	   default:
-    			   lineColor = Color.BLACK;
-    	   }
-       }
-   }//end ColorHandler
-    
-    //Step #2(D)- A handler class used to handle widths of lines
-    private class WidthHandler implements EventHandler<ActionEvent>
-    {
-        public void handle(ActionEvent event)
-        {
-        switch(widthCombo.getSelectionModel().getSelectedItem())
-        {
-        case "1":
-        	lineWidth = 1;
-        	break;
-        case "3":
-        	lineWidth = 3;
-        	break;
-        case "5":
-        	lineWidth = 5;
-        	break;
-        case "7":
-        	lineWidth = 7;
-        	break;
-        default:
-        	lineWidth = 1;
-        }
-            
-        }
-    }//end WidthHandler
-    */
    public void updateTextDisplay(String formattedText)
    {
 	   formattedTextDisplay.appendText(formattedText);
    }
-   public int getTextAreaWidth()
+   public int getDisplayWidth()
    {
-	   return TEXT_AREA_WIDTH;
+	   return DISPLAY_TEXT_AREA_WIDTH + ERROR_TEXT_AREA_WIDTH;
    }
    public int getTextAreaHeight()
    {
@@ -379,4 +247,4 @@ public class DisplayGui extends VBox
    {
 	   errorDisplay.appendText(errorMessage);
    }
-}//end class DrawingPane
+}
