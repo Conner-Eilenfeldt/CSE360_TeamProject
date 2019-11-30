@@ -166,6 +166,8 @@ public class ColumnTester
 						text = reader.readLine();
 						if(text != null)
 						{
+							int prevJustification = justification;
+							justification = 1;
 							if(column)
 							{
 								if(text.length() > MAX_COLUMN_LENGTH)
@@ -207,6 +209,7 @@ public class ColumnTester
 									dispGui.updateTextDisplay(text + "\n" + titleBars + "\n");
 								}
 							}
+							justification = prevJustification;
 						}
 						break;
 					case 's':
@@ -1075,5 +1078,5 @@ public class ColumnTester
 
 	}
 }
-	
-	*/
+
+ */
