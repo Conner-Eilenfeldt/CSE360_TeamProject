@@ -89,7 +89,7 @@ public class WrapQueue
 	
 	/**
 	 * updateQueue updates the text in the wrap information 
-	 * @updatedText replaces stored text
+	 * @param updatedText replaces stored text
 	 */
 	public void updateQueue(String updatedText)
 	{
@@ -155,7 +155,7 @@ public class WrapQueue
 	
 	/**
 	 * searchList finds a node at a specific index
-	 * @index is the index of the node to return
+	 * @param index is the index of the node to return
 	 * @return the node found at index
 	 */
 	public Node searchList(int index)
@@ -190,11 +190,11 @@ public class WrapQueue
 	
 	/**
 	 * insertText 
-	 * @insertText updates text to be inserted
-	 * @allignment updates allignment
-	 * @equallySpaced is it equally spaced
-	 * @singleSpaced	updates single or double spaced
-	 * @lineLength	updates the max line length
+	 * @param insertText updates text to be inserted
+	 * @param allignment updates allignment
+	 * @param equallySpaced is it equally spaced
+	 * @param singleSpaced	updates single or double spaced
+	 * @param lineLength	updates the max line length
 	 */
 	public void insertText(String insertText,int allignment,boolean equallySpaced, boolean singleSpaced,int lineLength)
 	{
