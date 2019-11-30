@@ -59,22 +59,34 @@ public class ColumnLinkedList
 	/*
 	 * Returns the total amount of nodes within
 	 * the linked list
+	 * @return Amount of nodes in linked list
 	 */
 	public int getNodeAmount()
 	{
 		return this.nodeAmount;
 	}
 	/*
-	 * 
+	 * Returns the head of the column linked list
+	 * @return head of the linked list 
 	 */
 	public Node getHead()
 	{
 		return this.head;
 	}
+	/*
+	 * Returns the tail of the column linked list
+	 * @return tail of the linked list
+	 */
 	public Node getTail()
 	{
 		return this.tail;
 	}
+	/*
+	 * Checks whether or not the column
+	 * linked list is empty
+	 * @return boolean value whether linked
+	 * list is or is not empty
+	 */
 	private boolean isEmpty()
 	{
 		boolean empty = false;
@@ -82,6 +94,13 @@ public class ColumnLinkedList
 			empty = true;
 		return empty;
 	}
+	/*
+	 * Returns the node at a specific
+	 * index within the linked list
+	 * 
+	 * @param index the position of node in list to be searched
+	 * @return node in linked list that was searched
+	 */
 	public Node searchList(int index)
 	{
 		Node searchResult = head;
@@ -93,6 +112,11 @@ public class ColumnLinkedList
 		}
 		return searchResult;
 	}
+	/*
+	 * Inserts node at the end of the linked list
+	 * @param insertNode node to be inserted at tail
+	 * of linked list
+	 */
 	private void insertAtTail(Node insertNode)
 	{
 		if(this.tail == null) //List is empty
@@ -107,11 +131,13 @@ public class ColumnLinkedList
 		}
 		nodeAmount++;
 	}
-	//Make sure string to input meets 35 character
-	//Limit
-	//Curent iteration assumes inserted column
-	//is already properly formatted
-	
+	/*
+	 * Precondition: textInput is properly
+	 * formatted to be inserted
+	 * 
+	 * @param textInput properly formatted
+	 * text to be inserted
+	 */
 	public void addTextLine(String textInput)
 	{
 		Node insertNode = new Node();
@@ -120,6 +146,12 @@ public class ColumnLinkedList
 		
 		insertAtTail(insertNode);
 	}
+	/*
+	 * Prints columns by finding the middle
+	 * of the linked list and printing moving from
+	 * the beginning and middle of list to
+	 * equally divide the text to create a column
+	 */
 	public void printColumns()
 	{
 		if(!isEmpty())
@@ -150,6 +182,10 @@ public class ColumnLinkedList
 			}		
 		}
 	}
+	/*
+	 * Clears all values and resets
+	 * the linked list
+	 */
 	public void clear()
 	{
 		head = null;

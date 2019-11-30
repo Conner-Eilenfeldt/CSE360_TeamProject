@@ -17,67 +17,36 @@ package application;
  * check if it is empty, update node information, getters and setters
  * popping the head of the queue. 
  */
-
 public class WrapQueue 
 {
-	/**
-	 * Subclass Node
-	 * contains an instance of wrap information
-	 * is to be used to implement a queue
-	 * points to the next node in the list
-	 */
 	private class Node
 	{
 		public WrapInformation wrapInfo;
 		public Node next;
 	}
 	
-	private int nodeAmount;    //how many lines are in the queue
+	private int nodeAmount;
 	private Node head;
 	private Node tail;
 	
-	/**
-	 * WrapQueue Constructor
-	 * sets all members to default values
-	 */
 	public WrapQueue()
 	{
 		head = null;
 		tail = null;
 		nodeAmount = 0;
 	}
-	
-	/**
-	 * getNodeAmount
-	 * @return the number of lines in the queue
-	 */
 	public int getNodeAmount()
 	{
 		return this.nodeAmount;
 	}
-	
-	/**
-	 * getHead
-	 * @return node at the head of the queue
-	 */
 	public Node getHead()
 	{
 		return this.head;
 	}
-	
-	/**
-	 * getTail
-	 * @return node at the tail of the queue
-	 */
 	public Node getTail()
 	{
 		return this.tail;
 	}
-	
-	/**
-	 * isEmpty checks if the queue is empty or not
-	 * @return true if it is empty, false if not
-	 */
 	public boolean isEmpty()
 	{
 		boolean empty = false;
@@ -85,11 +54,6 @@ public class WrapQueue
 			empty = true;
 		return empty;
 	}
-	
-	/**
-	 * updateQueue updates the text in the wrap information 
-	 * @param updatedText replaces stored text
-	 */
 	public void updateQueue(String updatedText)
 	{
 		if(head != null)
@@ -97,11 +61,6 @@ public class WrapQueue
 			head.wrapInfo.storedText = updatedText;
 		}
 	}
-	
-	/**
-	 * getQueueText if the queue is not empty
-	 * @return the text that is stored
-	 */
 	public String getQueueText()
 	{
 		String text = "";
@@ -111,12 +70,6 @@ public class WrapQueue
 		}
 		return text;
 	}
-	
-	/**
-	 * lastCharacterIndex finds the index of the last 
-	 * character of the last word in the line
-	 * @return index of the last non-space character
-	 */
 	public int lastCharacterIndex()
 	{
 		int lastCharacterIndex = -1;
@@ -135,11 +88,6 @@ public class WrapQueue
 		}
 		return lastCharacterIndex;
 	}
-	
-	/**
-	 * getLineLength 
-	 * @return the line length specified by user
-	 */
 	public int getLineLength()
 	{
 		int lineLength = 80;
@@ -151,12 +99,6 @@ public class WrapQueue
 		
 		return lineLength;
 	}
-	
-	/**
-	 * searchList finds a node at a specific index
-	 * @param index is the index of the node to return
-	 * @return the node found at index
-	 */
 	public Node searchList(int index)
 	{
 		Node searchResult = head;
@@ -168,11 +110,6 @@ public class WrapQueue
 		}
 		return searchResult;
 	}
-	
-	/**
-	 * removeFromHead pops the head of the queue
-	 * @return the head of the queue
-	 */
 	public WrapInformation removeFromHead()
 	{
 		WrapInformation removedText = null;
@@ -186,19 +123,10 @@ public class WrapQueue
 		}
 		return removedText;
 	}
-	
-	/**
-	 * insertText 
-	 * @param insertText updates text to be inserted
-	 * @param allignment updates alignment
-	 * @param equallySpaced is it equally spaced
-	 * @param singleSpaced	updates single or double spaced
-	 * @param lineLength	updates the max line length
-	 */
-	public void insertText(String insertText,int alignment,boolean equallySpaced, boolean singleSpaced,int lineLength)
+	public void insertText(String insertText,int allignment,boolean equallySpaced, boolean singleSpaced,int lineLength)
 	{
 		Node insertNode = new Node();
-		insertNode.wrapInfo = new WrapInformation(insertText,alignment,equallySpaced,singleSpaced,lineLength);
+		insertNode.wrapInfo = new WrapInformation(insertText,allignment,equallySpaced,singleSpaced,lineLength);
 		insertNode.next = null;
 		
 		if(isEmpty()) //List is empty
@@ -213,10 +141,6 @@ public class WrapQueue
 		}
 		nodeAmount++;
 	}
-	
-	/**
-	 * clear resets a node back to default values
-	 */
 	public void clear()
 	{
 		head = null;

@@ -1,16 +1,16 @@
 package application;
+
 import java.io.*;
 import java.util.ArrayList;
 
-/*
+/**
  * Team Members:
  * @author Payden Brown
  * @author Jonathan Chance
  * @author Conner Eilenfeldt
  * @author Ajay Tiwari
  * 
- * Class ID:	CSE360 85141
- * @version 5.0
+ * Class ID: CSE360 85141
  * 
  * Assignment: Team Project TextALot
  * Description:
@@ -36,16 +36,28 @@ public class TextALot
 	WrapQueue wrapQueue = new WrapQueue();
 	DisplayGui dispGui;
 
+	/**
+	 * TextALot constructor
+	 */
 	public TextALot()
 	{
 		dispGui = null;
 		columnList = new ColumnLinkedList();
 	}
+  
+	/**
+	 * TextALot constructor
+	 * @param dispGui the GUI
+	 */
 	public TextALot(DisplayGui dispGui)
 	{
 		this.dispGui = dispGui;
 		columnList = new ColumnLinkedList(dispGui);
 	}
+  
+	/**
+	 * resetDefaults sets all format settings to their defaults
+	 */
 	public void resetDefaults()
 	{
 		lineLength = 80;
@@ -58,6 +70,11 @@ public class TextALot
 		columnList.clear();
 		wrapQueue.clear();
 	}
+  
+	/**
+	 * textFormatter parses the input file and runs the corresponding commands
+	 * @param fileName the input file containing commands and the text to format
+	 */
 	public void textFormatter(String fileName)
 	{
 		BufferedReader reader = null;
@@ -107,28 +124,24 @@ public class TextALot
                 dispGui.updateErrorDisplay(INVALID_NUMERICAL_MESSAGE + "\n");
               }
               break;
-
             case 'l':
               if(text.equals("-l"))
                 justification = 0;
               else
                 dispGui.updateErrorDisplay(COMMAND_ERROR_MESSAGE + "\n");
               break;
-
             case 'c':
               if(text.equals("-c"))
                 justification = 1;
               else
                 dispGui.updateErrorDisplay(COMMAND_ERROR_MESSAGE + "\n");
               break;
-
             case 'r':
               if(text.equals("-r"))
                 justification = 2;
               else
                 dispGui.updateErrorDisplay(COMMAND_ERROR_MESSAGE + "\n");
               break;
-
             case 'e':
               if(text.equals("-e"))
                 equalSpacing = !equalSpacing;
@@ -329,7 +342,6 @@ public class TextALot
 							dispGui.updateTextDisplay(output + "\n");
 						}
 					}
-
 				}
 				text = reader.readLine();
 			}
@@ -369,33 +381,54 @@ public class TextALot
 			}
 		}
 	}
-	private String leftAllign(String inputText, int lineLimit)
+  
+	/**
+	 * leftAlign left aligns input text
+	 * @param inputText the input text to format
+	 * @param lineLimit the current line length
+	 * @return String: the formatted text
+	 */
+	private String leftAlign(String inputText, int lineLimit)
 	{
-		String allignedText = inputText;
+		String alignedText = inputText;
 		int adjustmentSpace = lineLimit - inputText.length();
 
 		for(int i = 0; i < adjustmentSpace; i++)
 		{
-			allignedText += " ";
+			alignedText += " ";
 		}
-		return allignedText;
+		return alignedText;
 	}
-	private String rightAllign(String inputText, int lineLimit)
+  
+	/**
+	 * rightAlign right aligns input text
+	 * @param inputText the input text to format
+	 * @param lineLimit the current line length
+	 * @return String: the formatted text
+	 */
+	private String rightAlign(String inputText, int lineLimit)
 	{
-		String allignedText = "";
+		String alignedText = "";
 		int adjustmentSpace = lineLimit - inputText.length();
 
 		for(int i = 0; i < adjustmentSpace; i++)
 		{
-			allignedText += " ";
+			alignedText += " ";
 		}
-		allignedText += inputText;
-		return allignedText;
+		alignedText += inputText;
+		return alignedText;
 	}
-	private String center(String inputText, int lineLimit)
+  
+	/**
+	 * centerAlign center aligns input text
+	 * @param inputText the input text to format
+	 * @param lineLimit the current line length
+	 * @return String: the formatted text
+	 */
+	private String centerAlign(String inputText, int lineLimit)
 	{
 		String spacing = "";
-		String allignedText = "";
+		String alignedText = "";
 
 		int adjustmentSpace = lineLimit - inputText.length();
 
@@ -404,15 +437,22 @@ public class TextALot
 			spacing += " ";
 		}
 
-		allignedText = spacing + inputText;
+		alignedText = spacing + inputText;
 
 		if(adjustmentSpace % 2 != 0)
-			allignedText += spacing + " ";
+			alignedText += spacing + " ";
 		else
-			allignedText += spacing;
-		return allignedText;
+			alignedText += spacing;
+		return alignedText;
 	}
-	private String equallySpaced(String UserText,int UserWidth)
+  
+  /**
+   * Equally spaces add spaces between the words equally
+	 * @param UserText the input text to format
+	 * @param UserWidth the current line length
+	 * @return String: the formatted text 
+   */
+	private String equallySpaced(String UserText, int UserWidth)
 	{
     /*
 		 * Dynamic array to store user text
@@ -502,6 +542,7 @@ public class TextALot
 			lines.add(words[presentWord]);
 		}
 		
+		//Combining all equally spaced words to be returned
 		int listLength = lines.size();
 		String equalSpacedLines = "";
 		for(int index = 0; index < listLength; index++)
@@ -553,6 +594,10 @@ public class TextALot
 		}
 		return helperText;
 	}
+
+	/**
+	 * addColumnWrap adds what is in the wrapQueue to the columnLinkedList
+	 */
 	private void addColumnWrap()
 	{
 		int tempJustification = justification;
@@ -578,7 +623,10 @@ public class TextALot
 		spacing = tempSpacing;
 		lineLength = tempLineLimit;
 	}
-	//Formats wrap input
+  
+	/**
+	 * printWrap formats the input text while wrapping
+	 */
 	private void printWrap()
 	{
 		int tempJustification = justification;
@@ -604,6 +652,11 @@ public class TextALot
 		spacing = tempSpacing;
 		lineLength = tempLineLimit;
 	}
+  
+	/**
+	 * formatWrapColumnInput formats the input text while wrapping in two columns
+	 * @param inputText the input text to format
+	 */
 	private void formatWrapColumnInput(String inputText)
 	{
 		int wrappingLimit = MAX_COLUMN_LENGTH;
@@ -657,7 +710,7 @@ public class TextALot
 					}
 				}
 			}
-			else //MAKE SURE TO ACCOUNT FOR BLANK LINES
+			else
 			{
 				boolean wordFound = false;
 				int index = 0;
@@ -802,6 +855,11 @@ public class TextALot
 			}
 		}
 	}
+  
+  /**
+   * formatWrapInput applies wrap formatting to text line
+   * @param inputText line text to be formatted
+   */
 	private void formatWrapInput(String inputText)
 	{
 		int wrappingLimit = wrapQueue.getLineLength();
@@ -1003,6 +1061,11 @@ public class TextALot
 			}
 		}
 	}
+
+/**
+ * formatColumnInput applies column formatting to text line
+ * @param inputText line text to be formatted
+ */
 	private void formatColumnInput(String inputText)
 	{
 		//Paragraph Exceeds 0
@@ -1067,23 +1130,29 @@ public class TextALot
 			case 0:
 				if(equalSpacing)
 					inputText = equallySpaced(inputText,MAX_COLUMN_LENGTH);
-				columnList.addTextLine(leftAllign(inputText,MAX_COLUMN_LENGTH));
+				columnList.addTextLine(leftAlign(inputText,MAX_COLUMN_LENGTH));
 				break;
 			case 1:
-				columnList.addTextLine(center(inputText,MAX_COLUMN_LENGTH));
+				columnList.addTextLine(centerAlign(inputText,MAX_COLUMN_LENGTH));
 				break;
 			case 2:
-				columnList.addTextLine(rightAllign(inputText,MAX_COLUMN_LENGTH));
+				columnList.addTextLine(rightAlign(inputText,MAX_COLUMN_LENGTH));
 				break;
 			default:
 				dispGui.updateErrorDisplay("Error invalid justification value\n");
 			}
 			if(spacing)
 			{
-				columnList.addTextLine(leftAllign("",MAX_COLUMN_LENGTH));
+				columnList.addTextLine(leftAlign("",MAX_COLUMN_LENGTH));
 			}
 		}
 	}
+
+/**
+ * formatInput outputs a formatted version of text
+ * @param inputText line text to be formatted
+ * @return	formatted version of text
+ */
 	private String formatInput(String inputText)
 	{
 		//Paragraph Exceeds 0
@@ -1148,13 +1217,13 @@ public class TextALot
 			case 0:
 				if(equalSpacing)
 					inputText = equallySpaced(inputText,lineLength);
-				formattedOutput = leftAllign(inputText,lineLength);
+				formattedOutput = leftAlign(inputText,lineLength);
 				break;
 			case 1:
-				formattedOutput = center(inputText,lineLength);
+				formattedOutput = centerAlign(inputText,lineLength);
 				break;
 			case 2:
-				formattedOutput = rightAllign(inputText,lineLength);
+				formattedOutput = rightAlign(inputText,lineLength);
 				break;
 			default:
 				dispGui.updateErrorDisplay("Error invalid justification value\n");

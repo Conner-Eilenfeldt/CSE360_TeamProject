@@ -36,7 +36,6 @@ public class WrapInformation
 		spacing = false;
 		lineLength = 80;
 	}
-	
 	/**
 	 * WrapInformation Constructor with specified settings
 	 * @param insertText updates the text to be added 
@@ -46,10 +45,10 @@ public class WrapInformation
 	 * @param lineLimit updates the line limit
 	 * updates all the settings to users specifications
 	 */
-	public WrapInformation(String insertText, int alignment,boolean equallySpaced,boolean singleSpaced,int lineLimit)
+	public WrapInformation(String insertText, int allignment,boolean equallySpaced,boolean singleSpaced,int lineLimit)
 	{
 		storedText = insertText;
-		justification = alignment;
+		justification = allignment;
 		equalSpacing = equallySpaced;
 		spacing = singleSpaced;
 		lineLength = lineLimit;
