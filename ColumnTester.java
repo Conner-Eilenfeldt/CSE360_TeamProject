@@ -140,23 +140,19 @@ public class ColumnTester
 						try
 						{
 							int number = Integer.parseInt(text.substring(2));
+							if(wrapping)
+							{
+								if(column)
+									addColumnWrap();
+								else
+									printWrap();
+							}
 							for(int i = 0; i < number; i++)
 							{
-								/* Do we even need to check for wrapping?
-								if(wrapping)
-								{
-									if(column)
-										formatColumnInput("");
-									else
-										formatWrapInput("");
-								}
-								else
-								{	*/
 								if(column)
 									formatColumnInput("");
 								else
 									dispGui.updateTextDisplay("\n");
-								//	 }
 							}
 						}
 						catch(NumberFormatException exception)
@@ -184,6 +180,8 @@ public class ColumnTester
 									String titleBars = "";
 									for(int i = 0; i < text.length(); i++)
 										titleBars += "-";
+									if(wrapping)
+										addColumnWrap();
 									formatColumnInput(text);
 									formatColumnInput(titleBars);
 								}
@@ -204,10 +202,8 @@ public class ColumnTester
 									text = formatInput(text);
 									titleBars = formatInput(titleBars);
 
-									/* Does an error occur?
-									 * When printing, there is always a new line at the end of the underline line.
-									 * It should be separate from regular formatter.
-									 */
+									if(wrapping)
+										printWrap();
 									dispGui.updateTextDisplay(text + "\n" + titleBars + "\n");
 								}
 							}
@@ -1024,11 +1020,11 @@ public class ColumnTester
 
 		return spaces;
 	}
+}
 
 
 
-
-
+/*
 
 	//Payden 
 	public void title(String line) {
@@ -1079,3 +1075,5 @@ public class ColumnTester
 
 	}
 }
+	
+	*/
