@@ -39,11 +39,11 @@ public class WrapInformation
 	
 	/**
 	 * WrapInformation Constructor with specified settings
-	 * @insertText updates the text to be added 
-	 * @allignment matches the allignment settings
-	 * @equallySpaced is equally spaced setting on
-	 * @singleSpaced matches settings of single or double spaced
-	 * @lineLimit updates the line limit
+	 * @param insertText updates the text to be added 
+	 * @param allignment matches the allignment settings
+	 * @param equallySpaced is equally spaced setting on
+	 * @param singleSpaced matches settings of single or double spaced
+	 * @param lineLimit updates the line limit
 	 * updates all the settings to users specifications
 	 */
 	public WrapInformation(String insertText, int allignment,boolean equallySpaced,boolean singleSpaced,int lineLimit)
