@@ -40,16 +40,16 @@ public class WrapInformation
 	/**
 	 * WrapInformation Constructor with specified settings
 	 * @param insertText updates the text to be added 
-	 * @param allignment matches the allignment settings
+	 * @param alignment matches the alignment settings
 	 * @param equallySpaced is equally spaced setting on
 	 * @param singleSpaced matches settings of single or double spaced
 	 * @param lineLimit updates the line limit
 	 * updates all the settings to users specifications
 	 */
-	public WrapInformation(String insertText, int allignment,boolean equallySpaced,boolean singleSpaced,int lineLimit)
+	public WrapInformation(String insertText, int alignment,boolean equallySpaced,boolean singleSpaced,int lineLimit)
 	{
 		storedText = insertText;
-		justification = allignment;
+		justification = alignment;
 		equalSpacing = equallySpaced;
 		spacing = singleSpaced;
 		lineLength = lineLimit;
