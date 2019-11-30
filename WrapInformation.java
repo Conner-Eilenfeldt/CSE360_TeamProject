@@ -40,7 +40,7 @@ public class WrapInformation
 	/**
 	 * WrapInformation Constructor with specified settings
 	 * @param insertText updates the text to be added 
-	 * @param alignment matches the alignment settings
+	 * @param allignment matches the alignment settings
 	 * @param equallySpaced is equally spaced setting on
 	 * @param singleSpaced matches settings of single or double spaced
 	 * @param lineLimit updates the line limit

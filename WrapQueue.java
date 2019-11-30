@@ -12,7 +12,7 @@ package application;
  * Assignment: Team Project TextALot
  * Description:
  * The implementation of the queue with WrapInformation nodes, class 
- * instances include a head poonter and tail pointer, and the number
+ * instances include a head pointer and tail pointer, and the number
  * of nodes in the queue. Supports normal queue functions such as: 
  * check if it is empty, update node information, getters and setters
  * popping the head of the queue. 
@@ -35,7 +35,6 @@ public class WrapQueue
 	private int nodeAmount;    //how many lines are in the queue
 	private Node head;
 	private Node tail;
-	
 	
 	/**
 	 * WrapQueue Constructor
@@ -116,7 +115,7 @@ public class WrapQueue
 	/**
 	 * lastCharacterIndex finds the index of the last 
 	 * character of the last word in the line
-	 * @return index of the last nonspace character
+	 * @return index of the last non-space character
 	 */
 	public int lastCharacterIndex()
 	{
@@ -191,15 +190,15 @@ public class WrapQueue
 	/**
 	 * insertText 
 	 * @param insertText updates text to be inserted
-	 * @param allignment updates allignment
+	 * @param allignment updates alignment
 	 * @param equallySpaced is it equally spaced
 	 * @param singleSpaced	updates single or double spaced
 	 * @param lineLength	updates the max line length
 	 */
-	public void insertText(String insertText,int allignment,boolean equallySpaced, boolean singleSpaced,int lineLength)
+	public void insertText(String insertText,int alignment,boolean equallySpaced, boolean singleSpaced,int lineLength)
 	{
 		Node insertNode = new Node();
-		insertNode.wrapInfo = new WrapInformation(insertText,allignment,equallySpaced,singleSpaced,lineLength);
+		insertNode.wrapInfo = new WrapInformation(insertText,alignment,equallySpaced,singleSpaced,lineLength);
 		insertNode.next = null;
 		
 		if(isEmpty()) //List is empty
