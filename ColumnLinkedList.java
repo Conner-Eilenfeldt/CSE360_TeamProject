@@ -1,7 +1,28 @@
 package application;
 
+/*
+ * Team Members:
+ * @author Payden Brown
+ * @author Jonathan Chance
+ * @author Conner Eilenfeldt
+ * @author Ajay Tiwari
+ * 
+ * Class ID:	CSE360 85141
+ * 
+ * Assignment: Team Project TextALot
+ * Description:
+ * ColumnLinkedList holds the output lines to then
+ * be properly formatted into columns
+ */
+
 public class ColumnLinkedList 
 {
+	/**
+	 * Node class is an individual
+	 * node in the linked list containing
+	 * the formattedText and pointer
+	 * to the next node 
+	 */
 	private class Node
 	{
 		public String formattedText;
@@ -15,12 +36,19 @@ public class ColumnLinkedList
 	private Node tail;
 	private DisplayGui dispGui;
 	
+	/*
+	 * Constructor for column linked list
+	 */
 	public ColumnLinkedList()
 	{
 		head = null;
 		tail = null;
 		nodeAmount = 0;
 	}
+	/*
+	 * Constructor for column linked
+	 * list with reference to display GUI
+	 */
 	public ColumnLinkedList(DisplayGui dispGui)
 	{
 		head = null;
@@ -28,10 +56,17 @@ public class ColumnLinkedList
 		nodeAmount = 0;
 		this.dispGui = dispGui;
 	}
+	/*
+	 * Returns the total amount of nodes within
+	 * the linked list
+	 */
 	public int getNodeAmount()
 	{
 		return this.nodeAmount;
 	}
+	/*
+	 * 
+	 */
 	public Node getHead()
 	{
 		return this.head;
@@ -101,12 +136,7 @@ public class ColumnLinkedList
 				rightColNavigator = searchList(median + 1);
 			
 			for(int i = 0; i < median; i++)
-			{
-				
-				System.out.print(leftColNavigator.formattedText);
-				System.out.print(COLUMN_SPACE);
-				System.out.println(rightColNavigator.formattedText);
-				
+			{	
 				dispGui.updateTextDisplay(leftColNavigator.formattedText);
 				dispGui.updateTextDisplay(COLUMN_SPACE);
 				dispGui.updateTextDisplay(rightColNavigator.formattedText + "\n");
@@ -116,7 +146,6 @@ public class ColumnLinkedList
 			}
 			if(leftColNavigator != null && !evenAmountNodes)
 			{
-				System.out.println(leftColNavigator.formattedText);
 				dispGui.updateTextDisplay(leftColNavigator.formattedText + "\n");
 			}		
 		}
