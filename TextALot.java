@@ -487,8 +487,7 @@ public class TextALot
 			totalWordLength += words[i].length();
 		}
 		int leftoverSpace = UserWidth - totalWordLength;
-		System.out.println(UserWidth);
-		if(tempLength > 2)
+		if(tempLength > 1)
 		{
 			//Add spaces
 			String spaces = "";
@@ -518,19 +517,16 @@ public class TextALot
 					}
 					presentWord++;
 					wordsPresentOnThisLine++;
-					System.out.println(presentLine);
 					lines.add(presentLine);
 				} 
 				else 
 				{
 					//it will add it truncate it and add it to next line
-					System.out.println("Entered");
 					presentLine = joinLineWithSpaces(presentLine.trim(), UserWidth - (presentLine.trim().length()));
 					lines.add(presentLine.trim());
 					presentLine = "";
 					wordsPresentOnThisLine = 0;
-				}
-			
+				}	
 			}
 			lines.add(words[presentWord]);
 		/*
@@ -794,7 +790,7 @@ public class TextALot
 							if(inputText.charAt(endWrapIndex) == ' ')
 							{
 								//Insert into queue directly
-								String wrappedText = inputText.substring(startWordIndex,endWrapIndex);
+								String wrappedText = inputText.substring(startWordIndex,endWrapIndex).trim();
 								String queueWrap = wrapQueue.getQueueText().substring(0,lastCharacterIndex + 1);
 
 								wrapQueue.updateQueue(queueWrap + " " + wrappedText);
@@ -827,7 +823,7 @@ public class TextALot
 									wrapIndex--;
 								}
 								//Insert remaining portion into queue
-								String wrappedText = inputText.substring(startWordIndex,wrapIndex + 1);
+								String wrappedText = inputText.substring(startWordIndex,wrapIndex);
 								String queueWrap = wrapQueue.getQueueText().substring(0,lastCharacterIndex + 1);
 
 								wrapQueue.updateQueue(queueWrap + " " + wrappedText);
@@ -999,9 +995,9 @@ public class TextALot
 							if(inputText.charAt(endWrapIndex) == ' ')
 							{
 								//Insert into queue directly
-								String wrappedText = inputText.substring(startWordIndex,endWrapIndex);
+								String wrappedText = inputText.substring(startWordIndex,endWrapIndex).trim();
 								String queueWrap = wrapQueue.getQueueText().substring(0,lastCharacterIndex + 1);
-
+								
 								wrapQueue.updateQueue(queueWrap + " " + wrappedText);
 
 								while(endWrapIndex < inputText.length() && inputText.charAt(endWrapIndex) == ' ')
@@ -1032,9 +1028,9 @@ public class TextALot
 									wrapIndex--;
 								}
 								//Insert remaining portion into queue
-								String wrappedText = inputText.substring(startWordIndex,wrapIndex + 1);
+								String wrappedText = inputText.substring(startWordIndex,wrapIndex);
 								String queueWrap = wrapQueue.getQueueText().substring(0,lastCharacterIndex + 1);
-
+								
 								wrapQueue.updateQueue(queueWrap + " " + wrappedText);
 
 								formatWrapInput(inputText.substring(wrapIndex + 1));
