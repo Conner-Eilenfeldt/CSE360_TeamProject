@@ -460,6 +460,8 @@ public class TextALot
 		 */
 		ArrayList < String > lines = new ArrayList < String > ();
 		
+		//Replaces all duplicate spaces with single space to be split
+		UserText = UserText.replaceAll("\\s+", " ");
 		/*
 		 * Splits user text 
 		 * Store in string array
