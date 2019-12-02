@@ -63,7 +63,7 @@ public class DisplayGui extends VBox
       saveFileField = new TextField("");
       
       //Initialize Labels
-      inputOutputError = new Label("Testing For Error");
+      inputOutputError = new Label("");
       inputOutputError.setTextFill(Color.RED);
       
       displayTextLabel = new Label("Display");
