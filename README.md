@@ -19,7 +19,7 @@
 				Wrapping is given precedence over equally spaced.  
 
 	
-	Also, the TexALot will provide errors output, including errors made in format instructions and file not found. 
+	Also, the TextALot will provide errors output, including errors made in format instructions and file not found. 
 	Any special characters used when saving will display error.
 	A user is required to select a .txt file as an input file. User must enter “.txt” when opening file. 
 	Also, it is saved in project folder. When saving, user does not need to enter “.txt”. 
