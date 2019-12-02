@@ -177,6 +177,10 @@ public class TextALot
                 {
                   dispGui.updateErrorDisplay("Error Paragraph cannot be zero or less\n");
                 }
+                else if(justification != 0) //Left Justified
+                {
+                	dispGui.updateErrorDisplay("Error Paragraph can only be used when text is left justified\n");
+                }
                 else
                   paragraph = number;
               }
@@ -326,8 +330,6 @@ public class TextALot
 				}
 				else
 				{
-					String output = formatInput(text);
-
 					if(wrapping)
 					{
 						if (column)
@@ -341,6 +343,7 @@ public class TextALot
 							formatColumnInput(text);
 						else
 						{
+							String output = formatInput(text);
 							dispGui.updateTextDisplay(output + "\n");
 						}
 					}
@@ -662,18 +665,13 @@ public class TextALot
 		int wrappingLimit = MAX_COLUMN_LENGTH;
 
 		//Paragraph Exceeds 0
-		if(paragraph > 0 && justification == 0)		
+		if(paragraph > 0)
 		{
 			for(int i = 0; i < paragraph;i++)
 			{
 				inputText = " " + inputText;
 			}
 			paragraph = 0; //Reset paragraph to 0
-		}
-		else if(paragraph > 0) 
-		{
-			dispGui.updateErrorDisplay("Error paragraph must be left aligned\n");
-			paragraph = 0;
 		}
 		boolean exceedsLimit = inputText.length() > MAX_COLUMN_LENGTH;
 
@@ -722,6 +720,7 @@ public class TextALot
 					{
 						wordFound = true;
 					}
+					index++;
 				}
 				if(wordFound)
 					wrapQueue.insertText(inputText, justification, equalSpacing, spacing,lineLength);
@@ -866,18 +865,13 @@ public class TextALot
 	{
 		int wrappingLimit = wrapQueue.getLineLength();
 		//Paragraph Exceeds 0
-		if(paragraph > 0 && justification == 0)		
+		if(paragraph > 0)
 		{
 			for(int i = 0; i < paragraph;i++)
 			{
 				inputText = " " + inputText;
 			}
 			paragraph = 0; //Reset paragraph to 0
-		}
-		else if(paragraph > 0) 
-		{
-			dispGui.updateErrorDisplay("Error paragraph must be left aligned\n");
-			paragraph = 0;
 		}
 		boolean exceedsLimit = inputText.length() > lineLength;
 
@@ -928,6 +922,7 @@ public class TextALot
 					{
 						wordFound = true;
 					}
+					index++;
 				}
 				if(wordFound)
 					wrapQueue.insertText(inputText, justification, equalSpacing, spacing,lineLength);
@@ -1073,18 +1068,13 @@ public class TextALot
 	private void formatColumnInput(String inputText)
 	{
 		//Paragraph Exceeds 0
-		if(paragraph > 0 && justification == 0)		
+		if(paragraph > 0)
 		{
 			for(int i = 0; i < paragraph;i++)
 			{
 				inputText = " " + inputText;
 			}
 			paragraph = 0; //Reset paragraph to 0
-		}
-		else if(paragraph > 0) 
-		{
-			dispGui.updateErrorDisplay("Error paragraph must be left aligned\n");
-			paragraph = 0;
 		}
 		boolean exceedsLimit = inputText.length() > MAX_COLUMN_LENGTH;
 
@@ -1162,18 +1152,13 @@ public class TextALot
 	private String formatInput(String inputText)
 	{
 		//Paragraph Exceeds 0
-		if(paragraph > 0 && justification == 0)		
+		if(paragraph > 0)
 		{
 			for(int i = 0; i < paragraph;i++)
 			{
 				inputText = " " + inputText;
 			}
 			paragraph = 0; //Reset paragraph to 0
-		}
-		else if(paragraph > 0) 
-		{
-			dispGui.updateErrorDisplay("Error paragraph must be left aligned\n");
-			paragraph = 0;
 		}
 		String formattedOutput = "";
 		boolean exceedsLimit = inputText.length() > lineLength;
