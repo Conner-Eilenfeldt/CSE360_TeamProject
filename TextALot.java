@@ -112,7 +112,7 @@ public class TextALot
                 }
                 else if(column)
                 {
-                  dispGui.updateErrorDisplay("Error can not modify line length while column is active\n");
+                  dispGui.updateErrorDisplay("Error can not modify line length with double columns\n");
                 }
                 else
                 {
