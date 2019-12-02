@@ -662,13 +662,18 @@ public class TextALot
 		int wrappingLimit = MAX_COLUMN_LENGTH;
 
 		//Paragraph Exceeds 0
-		if(paragraph > 0)
+		if(paragraph > 0 && justification == 0)		
 		{
 			for(int i = 0; i < paragraph;i++)
 			{
 				inputText = " " + inputText;
 			}
 			paragraph = 0; //Reset paragraph to 0
+		}
+		else if(paragraph > 0) 
+		{
+			dispGui.updateErrorDisplay("Error paragraph must be left aligned\n");
+			paragraph = 0;
 		}
 		boolean exceedsLimit = inputText.length() > MAX_COLUMN_LENGTH;
 
@@ -861,13 +866,18 @@ public class TextALot
 	{
 		int wrappingLimit = wrapQueue.getLineLength();
 		//Paragraph Exceeds 0
-		if(paragraph > 0)
+		if(paragraph > 0 && justification == 0)		
 		{
 			for(int i = 0; i < paragraph;i++)
 			{
 				inputText = " " + inputText;
 			}
 			paragraph = 0; //Reset paragraph to 0
+		}
+		else if(paragraph > 0) 
+		{
+			dispGui.updateErrorDisplay("Error paragraph must be left aligned\n");
+			paragraph = 0;
 		}
 		boolean exceedsLimit = inputText.length() > lineLength;
 
@@ -1063,13 +1073,18 @@ public class TextALot
 	private void formatColumnInput(String inputText)
 	{
 		//Paragraph Exceeds 0
-		if(paragraph > 0)
+		if(paragraph > 0 && justification == 0)		
 		{
 			for(int i = 0; i < paragraph;i++)
 			{
 				inputText = " " + inputText;
 			}
 			paragraph = 0; //Reset paragraph to 0
+		}
+		else if(paragraph > 0) 
+		{
+			dispGui.updateErrorDisplay("Error paragraph must be left aligned\n");
+			paragraph = 0;
 		}
 		boolean exceedsLimit = inputText.length() > MAX_COLUMN_LENGTH;
 
@@ -1147,13 +1162,18 @@ public class TextALot
 	private String formatInput(String inputText)
 	{
 		//Paragraph Exceeds 0
-		if(paragraph > 0)
+		if(paragraph > 0 && justification == 0)		
 		{
 			for(int i = 0; i < paragraph;i++)
 			{
 				inputText = " " + inputText;
 			}
 			paragraph = 0; //Reset paragraph to 0
+		}
+		else if(paragraph > 0) 
+		{
+			dispGui.updateErrorDisplay("Error paragraph must be left aligned\n");
+			paragraph = 0;
 		}
 		String formattedOutput = "";
 		boolean exceedsLimit = inputText.length() > lineLength;
