@@ -102,11 +102,11 @@ public class TextALot
               try
               {
                 int number = Integer.parseInt(text.substring(2));
-                if(lineLength <= 0)
+                if(number <= 0)
                 {
                   dispGui.updateErrorDisplay("Error Line Length can not be negative or zero\n");
                 }
-                else if(lineLength > MAX_LINE_LENGTH)
+                else if(number > MAX_LINE_LENGTH)
                 {
                   dispGui.updateErrorDisplay("Error new line length exceeds max line length\n");
                 }
@@ -191,7 +191,7 @@ public class TextALot
                 int number = Integer.parseInt(text.substring(2));
                 if(number <= 0)
                 {
-                  dispGui.updateErrorDisplay("Error Paragraph Length can not be less than or equal to zero\n");
+                  dispGui.updateErrorDisplay("Error Number of Blank Lines can not be less than or equal to zero\n");
                 }
                 else
                 {
@@ -220,10 +220,12 @@ public class TextALot
               text = reader.readLine();
               if(text != null)
               {
-                if(text.charAt(0) == '-') {	
-									dispGui.updateErrorDisplay("Error conflicting commands\n");
-								}	
-								else {	
+                if(text.charAt(0) == '-') 
+                {	
+						dispGui.updateErrorDisplay("Error conflicting commands\n");
+				}	
+				else 
+				{	
                   int prevJustification = justification;
                   justification = 1;
                   if(column)
@@ -534,7 +536,7 @@ public class TextALot
 		 */
 		
 		}
-		else
+		else if(tempLength > 0)
 		{
 			//Add single word
 			lines.add(words[presentWord]);
