@@ -670,9 +670,6 @@ public class TextALot
 			}
 			paragraph = 0; //Reset paragraph to 0
 		}
-		//When validating if input exceeds limit, remember
-		//to include error when entire word exceeds limit
-		//and cannot be broken up
 		boolean exceedsLimit = inputText.length() > MAX_COLUMN_LENGTH;
 
 		if(wrapQueue.isEmpty())
@@ -872,9 +869,6 @@ public class TextALot
 			}
 			paragraph = 0; //Reset paragraph to 0
 		}
-		//When validating if input exceeds limit, remember
-		//to include error when entire word exceeds limit
-		//and cannot be broken up
 		boolean exceedsLimit = inputText.length() > lineLength;
 
 		if(wrapQueue.isEmpty())
@@ -1077,9 +1071,6 @@ public class TextALot
 			}
 			paragraph = 0; //Reset paragraph to 0
 		}
-		//When validating if input exceeds limit, remember
-		//to include error when entire word exceeds limit
-		//and cannot be broken up
 		boolean exceedsLimit = inputText.length() > MAX_COLUMN_LENGTH;
 
 		if(exceedsLimit)
