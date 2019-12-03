@@ -174,12 +174,16 @@ public class DisplayGui extends VBox
             			FileWriter writeFile;
                     	try 
                     	{
-                    		writeFile = new FileWriter(saveFileField.getText() + ".txt");
+                    		File jarFile = new File(DisplayGui.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+                    		String saveFile = jarFile.getParent() + "\\" + saveFileField.getText() + ".txt";
+                    		
+                    		//Used to replace spaces if they exist in file name
+                    		saveFile = saveFile.replaceAll("%20", " ");
+                    		writeFile = new FileWriter(saveFile);
                     		BufferedWriter fileWrite = new BufferedWriter(writeFile);
                     		
                     		String[] formattedTextLines = formattedTextDisplay.getText().split("\n");
                         	int navigatingIndex = 0;
-                        	System.out.print(formattedTextLines.length);
                         	
                         	while(navigatingIndex < formattedTextLines.length)
                         	{
@@ -192,7 +196,7 @@ public class DisplayGui extends VBox
                     	}
                     	catch (IOException exception)
                     	{
-                    		exception.printStackTrace();
+                    		inputOutputError.setText("Error saving, please try again");
                     	}
             		}	
             	}
