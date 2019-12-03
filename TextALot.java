@@ -1137,7 +1137,7 @@ public class TextALot
 			default:
 				dispGui.updateErrorDisplay("Error invalid justification value\n");
 			}
-			if(spacing)
+			if(spacing && inputText.length() > 0)
 			{
 				columnList.addTextLine(leftAlign("",MAX_COLUMN_LENGTH));
 			}
